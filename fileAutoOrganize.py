@@ -18,17 +18,12 @@ def get_option():
                            help='picture move to path ex:-p Pictures -> move to path: /Users/$username/Pictures/$date')
     return argparser.parse_args()
 
-#mac以外は弾く
-platformtype = platform.system()
-if platformtype != u"Darwin":
-    print ("not mac")
-    exit()
+#args取得
 args = sys.argv
 optionargs = get_option()
 #pathの構築
-user = getpass.getuser()
-basepicturepath = u"/Users/" + user + "/" + optionargs.path
-outputpath = u"/Users/" + user + "/" + optionargs.output
+basepicturepath = os.path.expanduser('~') + "/" + optionargs.path
+outputpath = os.path.expanduser('~') + "/" + optionargs.output
 filepathlist = glob.glob(basepicturepath + "/*.*")
 #取得したファイルを移動する
 for filepath in filepathlist:
